@@ -42,7 +42,10 @@ body{
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    min-width: 40px;
+    
+}
+.search button i{
+    width:16px;
 }
 
 .weather-icon{
