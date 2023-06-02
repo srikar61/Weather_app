@@ -69,104 +69,43 @@ body {
     
   </body>
      <script>
-     const apikey = "8f0201fdebeb9b890618b1dd05218be0";
-const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-const searchbox = document.querySelector(".search input");
-const searchbtn = document.querySelector(".search button");
-const weathericon = document.querySelector(".weather-icon");
-
-async function checkWeather(city) {
-  const response = await fetch(apiurl + city + `&appid=${apikey}`);
-
-  if (response.status == 404) {
-    document.querySelector(".error").style.display = "block";
-    document.querySelector(".weather").style.display = "none";
-  } else {
-    var data = await response.json();
-    console.log(data);
-
-    document.querySelector(".city").innerHTML = data.name;
-    document.querySelector(".temp").innerHTML =
-      Math.round(data.main.temp) + "°c";
-    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-    document.querySelector(".wind").innerHTML =
-      Math.round(data.wind.speed) + " km/hr";
-
-    if (data.weather[0].main == "Clouds") {
-      weathericon.src = "images/clouds.png";
-    } else if (data.weather[0].main == "Clear") {
-      weathericon.src = "images/clear.png";
-    } else if (data.weather[0].main == "Drizzle") {
-      weathericon.src = "images/drizzle.png";
-    } else if (data.weather[0].main == "Rain") {
-      weathericon.src = "images/rain.png";
-    } else if (data.weather[0].main == "Mist") {
-      weathericon.src = "images/mist.png";
-    }
-
-    document.querySelector(".weather").style.display = "block";
-    document.querySelector(".error").style.display = "none";
-  }
-}
-
-// Set default city to Guntur
-const defaultCity = "Guntur";
-searchbox.value = defaultCity;
-checkWeather(defaultCity);
-
-// Get user location
+     let locationButton = document.getElementById("get-location");
 let locationDiv = document.getElementById("location-details");
 
-// Error Checks
+locationButton.addEventListener("click", () => {
+  //Geolocation APU is used to get geographical position of a user and is available inside the navigator object
+  if (navigator.geolocation) {
+    //returns position(latitude and longitude) or error
+    navigator.geolocation.getCurrentPosition(showLocation, checkError);
+  } else {
+    //For old browser i.e IE
+    locationDiv.innerText = "The browser does not support geolocation";
+  }
+});
+
+//Error Checks
 const checkError = (error) => {
   switch (error.code) {
     case error.PERMISSION_DENIED:
       locationDiv.innerText = "Please allow access to location";
       break;
     case error.POSITION_UNAVAILABLE:
-      // Usually fired for Firefox
+      //usually fired for firefox
       locationDiv.innerText = "Location Information unavailable";
       break;
     case error.TIMEOUT:
       locationDiv.innerText = "The request to get user location timed out";
   }
-  // Use default city if location retrieval fails
-  checkWeather(defaultCity);
 };
 
 const showLocation = async (position) => {
-  // Use Nominatim API to get the actual address from latitude and longitude
+  //We user the NOminatim API for getting actual addres from latitude and longitude
   let response = await fetch(
     `https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`
   );
+  //store response object
   let data = await response.json();
-
-  if (data.address && data.address.city) {
-    // If city is available in the response, use it as the current city
-    const city = data.address.city;
-    searchbox.value = city;
-    checkWeather(city);
-  } else {
-    // If city is not available, use the default city
-    checkWeather(defaultCity);
-  }
+  locationDiv.innerText = `${data.address.city}, ${data.address.country}`;
 };
-
-let locationButton = document.getElementById("get-location");
-
-locationButton.addEventListener("click", () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showLocation, checkError);
-  } else {
-    locationDiv.innerText = "The browser does not support geolocation";
-    // Use default city if geolocation is not supported
-    checkWeather(defaultCity);
-  }
-});
-
-searchbtn.addEventListener("click", () => {
-  checkWeather(searchbox.value);
-});
-
    </script>
 </html>
