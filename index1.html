@@ -268,7 +268,7 @@ rel="stylesheet"
 window.onload = function () {
 document.querySelector(".get-location").click(); };
 
-   const apikey = "e4146bc5cd3b9c6d37630860a42b4996";
+const apikey = "e4146bc5cd3b9c6d37630860a42b4996";
 const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 const searchbox = document.querySelector(".search input");
 const searchbtn = document.querySelector(".searchbtn");
@@ -313,6 +313,42 @@ async function checkWeather(city) {
   }
 }
 
+async function checkWeather1(lat,lon) {
+  apiurl1="https://api.openweathermap.org/data/2.5/weather?units=metric&";
+  const response = await fetch(apiurl1 + `lon=`+lon +`&lat=`+lat+ `&appid=${apikey}`);
+
+  if (response.status == 404) {
+    document.querySelector(".error").style.display = "block";
+    document.querySelector(".weather").style.display = "none";
+  } else {
+    var data = await response.json();
+    console.log(data);
+
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML =
+      Math.round(data.main.temp) + "°c";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML =
+      Math.round(data.wind.speed) + " km/hr";
+
+    if (data.weather[0].main == "Clouds") {
+      weathericon.src = "images/clouds.png";
+    } else if (data.weather[0].main == "Clear") {
+      weathericon.src = "images/clear.png";
+    } else if (data.weather[0].main == "Drizzle") {
+      weathericon.src = "images/drizzle.png";
+    } else if (data.weather[0].main == "Rain") {
+      weathericon.src = "images/rain.png";
+    } else if (data.weather[0].main == "Mist") {
+      weathericon.src = "images/mist.png";
+    }
+
+    document.querySelector(".weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
+    document.querySelector(".feels").innerHTML=Math.round(data.main.feels_like);
+    document.querySelector(".visible").innerHTML=(data.visibility)/1000 + " km";
+  }
+}
 
 locationButton.addEventListener("click", () => {
 //Geolocation APU is used to get geographical position of a user and is available inside the navigator object
@@ -348,8 +384,12 @@ let response = await fetch(
 //store response object
 let data = await response.json();
 searchbox.value = `${data.address.city}`;
+let longitude=position.coords.longitude;
+let latitude=position.coords.latitude;
 console.log(data);
-checkWeather(searchbox.value);
+console.log(latitude,longitude);
+checkWeather1(latitude,longitude);
+
 };
 
 
