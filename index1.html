@@ -14,6 +14,7 @@
 }
 body{
     background: #222;
+    min-width: 300px;
 }
 .card{
     width: 90%;
@@ -74,7 +75,15 @@ body{
     margin-top: -10px;
 }
 
-.details{
+.details1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:  0 0px;
+    margin-top: 50px;
+
+}
+.details2{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -82,12 +91,22 @@ body{
     margin-top: 50px;
 
 }
-.col{
+.col1{
     display: flex;
     align-items: center;
     text-align: left;
 }
-.col img{
+.col2{
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+.col1 img{
+  
+    width: 40px;
+    margin-right: 10px;
+}
+.col2 img{
     width: 40px;
     margin-right: 10px;
 }
@@ -96,6 +115,12 @@ body{
     margin-bottom: -6px;
     margin-top: 10px;
 }
+.visible, .feels{
+    font-size: 28px;
+    margin-bottom: -6px;
+    margin-top: 10px;
+}
+
 .weather{
     display: none;
 }
@@ -108,23 +133,27 @@ body{
     padding: 20px 10px;
     width:100%;/* Reduce the padding to create more space */
      background: linear-gradient(135deg, #00ffff, #8a5b9a);
+     min-width: 360px;
   }
   
   .search input {
     margin-right: 1px; /* Reduce the right margin */
     font-size: 16px; /* Decrease the font size for mobile devices */
-    height: 40px; /* Decrease the height of the input field */
+    height: 40px;
+    flex: 1 1 auto; /* Decrease the height of the input field */
   }
   
   .search button {
     width: 50px; /* Decrease the width of the search button */
     height: 40px;
     
+    
      /* Decrease the height of the search button */
   }
   
   .search button i {
-    font-size: 17px; /* Decrease the font size of the search icon */
+    font-size: 15px;
+     /* Decrease the font size of the search icon */
   }
 
 .humidity, .wind{
@@ -132,9 +161,28 @@ body{
     margin-bottom: -1px;
     margin-top: 10px;
 }
-.col p{
+.feels, .visible{
+    font-size: 16px;
+    margin-bottom: -1px;
+    margin-top: 10px;
+}
+.col1 p{
   font-size: 12px;
 }
+.col2 p{
+  font-size: 12px;
+}
+.weather h1{
+    font-size: 60px;
+    font-weight: 400;
+
+}
+.weather h2{
+    font-size: 35px;
+    font-weight: 300;
+    margin-top: -10px;
+}
+
 }
 
     </style>
@@ -160,11 +208,11 @@ rel="stylesheet"
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
 ></script>
 </head>
-<body>
+<body >
     <div class="card">
         <div class="search">
             <input type="search" spellcheck="false" placeholder="enter city name">
-            <button><i class="fas fa-search"></i></button><button><i class="fas fa-location-arrow"></i></button>
+            <button class="searchbtn"><i class="fas fa-search"></i></button><button class="get-location"><i class="fas fa-location-arrow"></i></button>
         </div>
         <div class="error">
             <p>Invalid city name</p>
@@ -173,52 +221,61 @@ rel="stylesheet"
             <img src="images/rain.png" class="weather-icon">
             <h1 class="temp">22°c</h1>
             <h2 class="city">Berlin</h2>
-            <div class="details">
-              <div class="col">
-                  <img src="images/humidity.png">
+            <div class="details1">
+              <div class="col1">
+                  <img src="images/hot.png">
                   <div>
-                      <p class="humidity">50%</p>
-                      <p>Humidity</p>
+                    <p class="feels">32°c</p>
+                      <p >Real feel</p>
+                      
                   </div>
               </div>
-              <div class="col">
-                  <img src="images/wind.png">
+              <div class="col1">
+                  <img src="images/witness.png">
                   <div>
-                      <p class="wind">15 km/h</p>
-                      <p>Wind Speed</p>
+                    <p class="visible">6 km</p>
+                      <p >Visibility</p>
+                      
                   </div>
               </div>
             </div> 
-            <div class="details">
-                <div class="col">
-                    <img src="images/humidity.png">
-                    <div>
-                        <p class="humidity">50%</p>
-                        <p>Humidity</p>
-                    </div>
-                </div>
-                <div class="col">
-                    <img src="images/wind.png">
-                    <div>
-                        <p class="wind">15 km/h</p>
-                        <p>Wind Speed</p>
-                    </div>
-                </div>
-                
+            <div class="details2">
+              <div class="col2">
+                  <img src="images/humidity.png">
+                  <div>
+                    <p class="humidity">40%</p>
+                      <p >Humidity</p>
+                      
+                  </div>
+              </div>
+              <div class="col2">
+                  <img src="images/wind.png">
+                  <div>
+                    <p class="wind">6 km/h</p>
+                      <p >Wind speed</p>
+                      
+                  </div>
+              </div>
             </div>
             
           </div>
-        </div>
+      </div>
         
-    </div>
+    
     
 </body>
 <script>
-   const apikey = "8f0201fdebeb9b890618b1dd05218be0";
+window.onload = function () {
+document.querySelector(".get-location").click(); };
+
+   const apikey = "e4146bc5cd3b9c6d37630860a42b4996";
 const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 const searchbox = document.querySelector(".search input");
-const searchbtn = document.querySelector(".search button");
+const searchbtn = document.querySelector(".searchbtn");
 const weathericon = document.querySelector(".weather-icon");
+const locationButton=document.querySelector(".get-location");
+
+
 
 async function checkWeather(city) {
   const response = await fetch(apiurl + city + `&appid=${apikey}`);
@@ -251,13 +308,56 @@ async function checkWeather(city) {
 
     document.querySelector(".weather").style.display = "block";
     document.querySelector(".error").style.display = "none";
+    document.querySelector(".feels").innerHTML=Math.round(data.main.feels_like);
+    document.querySelector(".visible").innerHTML=(data.visibility)/1000 + " km";
   }
 }
 
+
+locationButton.addEventListener("click", () => {
+//Geolocation APU is used to get geographical position of a user and is available inside the navigator object
+if (navigator.geolocation) {
+//returns position(latitude and longitude) or error
+navigator.geolocation.getCurrentPosition(showLocation, checkError);
+} else {
+//For old browser i.e IE
+locationDiv.innerText = "The browser does not support geolocation";
+}
+});
+
+//Error Checks
+const checkError = (error) => {
+switch (error.code) {
+case error.PERMISSION_DENIED:
+locationDiv.innerText = "Please allow access to location";
+break;
+case error.POSITION_UNAVAILABLE:
+//usually fired for firefox
+locationDiv.innerText = "Location Information unavailable";
+break;
+case error.TIMEOUT:
+locationDiv.innerText = "The request to get user location timed out";
+}
+};
+
+const showLocation = async (position) => {
+//We user the NOminatim API for getting actual addres from latitude and longitude
+let response = await fetch(
+`https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`
+);
+//store response object
+let data = await response.json();
+searchbox.value = `${data.address.city}`;
+console.log(data);
+checkWeather(searchbox.value);
+};
+
+
+
 // Set default city to Guntur
-const defaultCity = "Guntur";
-searchbox.value = defaultCity;
-checkWeather(defaultCity);
+//const defaultCity = "Guntur";
+//searchbox.value = defaultCity;
+//checkWeather(searchbox.value);
 
 searchbtn.addEventListener("click", () => {
   checkWeather(searchbox.value);
