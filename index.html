@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather</title>
+    <style>
+      *{
+    font-family: 'Alatsi';
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: #222;
+    min-width: 300px;
+}
+.card{
+    width: 90%;
+    max-width: 470px;
+    background: linear-gradient(135deg,#00feba,#5b548a);
+
+
+
+    color: #fff;
+    margin: 100px auto 0;
+    border-radius: 20px;
+    padding: 40px 35px;
+    text-align: center;
+}
+.search{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.search input{
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    color: #555;
+    padding: 10px 25px;
+    height: 60px;
+    border-radius:30px ;
+    flex:1;
+    margin-right: 16px;
+    font-size: 18px;
+}
+.search button{
+    border:0;
+    outline: 0;
+    background: #ebfffc;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    
+}
+.search button i{
+    width:16px;
+}
+
+.weather-icon{
+    width: 170px;
+    margin-top: 30px;
+}
+.weather h1{
+    font-size: 80px;
+    font-weight: 400;
+
+}
+.weather h2{
+    font-size: 45px;
+    font-weight: 300;
+    margin-top: -10px;
+}
+
+.details1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:  0 0px;
+    margin-top: 50px;
+
+}
+.details2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:  0 20px;
+    margin-top: 50px;
+
+}
+.col1{
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+.col2{
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+.col1 img{
+  
+    width: 40px;
+    margin-right: 10px;
+}
+.col2 img{
+    width: 40px;
+    margin-right: 10px;
+}
+.humidity, .wind{
+    font-size: 28px;
+    margin-bottom: -6px;
+    margin-top: 10px;
+}
+.visible, .feels{
+    font-size: 28px;
+    margin-bottom: -6px;
+    margin-top: 10px;
+}
+
+.weather{
+    display: none;
+}
+.error{
+    display: none;
+}
+
+@media only screen and (max-width: 770px) {
+  .card {
+    padding: 20px 10px;
+    width:100%;/* Reduce the padding to create more space */
+     background: linear-gradient(135deg, #00ffff, #8a5b9a);
+     min-width: 360px;
+  }
+  
+  .search input {
+    margin-right: 1px; /* Reduce the right margin */
+    font-size: 16px; /* Decrease the font size for mobile devices */
+    height: 40px;
+    flex: 1 1 auto; /* Decrease the height of the input field */
+  }
+  
+  .search button {
+    width: 50px; /* Decrease the width of the search button */
+    height: 40px;
+    
+    
+     /* Decrease the height of the search button */
+  }
+  
+  .search button i {
+    font-size: 15px;
+     /* Decrease the font size of the search icon */
+  }
+
+.humidity, .wind{
+    font-size: 16px;
+    margin-bottom: -1px;
+    margin-top: 10px;
+}
+.feels, .visible{
+    font-size: 16px;
+    margin-bottom: -1px;
+    margin-top: 10px;
+}
+.col1 p{
+  font-size: 12px;
+}
+.col2 p{
+  font-size: 12px;
+}
+.weather h1{
+    font-size: 60px;
+    font-weight: 400;
+
+}
+.weather h2{
+    font-size: 35px;
+    font-weight: 300;
+    margin-top: -10px;
+}
+
+}
+
+    </style>
+    <link href='https://fonts.googleapis.com/css?family=Alatsi' rel='stylesheet'>
+    <!-- Font Awesome -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css"
+rel="stylesheet"
+/>
+<!-- MDB -->
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"
+></script>
+</head>
+<body >
+    <div class="card">
+        <div class="search">
+            <input type="search" spellcheck="false" placeholder="enter city name">
+            <button class="searchbtn"><i class="fas fa-search"></i></button><button class="get-location"><i class="fas fa-location-arrow"></i></button>
+        </div>
+        <div class="error">
+            <p>Invalid city name</p>
+        </div>
+        <div class="weather">
+            <img src="images/rain.png" class="weather-icon">
+            <h1 class="temp">22°c</h1>
+            <h2 class="city">Berlin</h2>
+            <div class="details1">
+              <div class="col1">
+                  <img src="images/hot.png">
+                  <div>
+                    <p class="feels">32°c</p>
+                      <p >Real feel</p>
+                      
+                  </div>
+              </div>
+              <div class="col1">
+                  <img src="images/witness.png">
+                  <div>
+                    <p class="visible">6 km</p>
+                      <p >Visibility</p>
+                      
+                  </div>
+              </div>
+            </div> 
+            <div class="details2">
+              <div class="col2">
+                  <img src="images/humidity.png">
+                  <div>
+                    <p class="humidity">40%</p>
+                      <p >Humidity</p>
+                      
+                  </div>
+              </div>
+              <div class="col2">
+                  <img src="images/wind.png">
+                  <div>
+                    <p class="wind">6 km/h</p>
+                      <p >Wind speed</p>
+                      
+                  </div>
+              </div>
+            </div>
+            
+          </div>
+      </div>
+        
+    
+    
+</body>
+<script>
+window.onload = function () {
+document.querySelector(".get-location").click(); };
+
+const apikey = "e4146bc5cd3b9c6d37630860a42b4996";
+const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+const searchbox = document.querySelector(".search input");
+const searchbtn = document.querySelector(".searchbtn");
+const weathericon = document.querySelector(".weather-icon");
+const locationButton=document.querySelector(".get-location");
+
+
+
+async function checkWeather(city) {
+  const response = await fetch(apiurl + city + `&appid=${apikey}`);
+
+  if (response.status == 404) {
+    document.querySelector(".error").style.display = "block";
+    document.querySelector(".weather").style.display = "none";
+  } else {
+    var data = await response.json();
+    console.log(data);
+
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML =
+      Math.round(data.main.temp) + "°c";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML =
+      Math.round(data.wind.speed) + " km/hr";
+
+    if (data.weather[0].main == "Clouds") {
+      weathericon.src = "images/clouds.png";
+    } else if (data.weather[0].main == "Clear") {
+      weathericon.src = "images/clear.png";
+    } else if (data.weather[0].main == "Drizzle") {
+      weathericon.src = "images/drizzle.png";
+    } else if (data.weather[0].main == "Rain") {
+      weathericon.src = "images/rain.png";
+    } else if (data.weather[0].main == "Mist") {
+      weathericon.src = "images/mist.png";
+    }
+
+    document.querySelector(".weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
+    document.querySelector(".feels").innerHTML=Math.round(data.main.feels_like);
+    document.querySelector(".visible").innerHTML=(data.visibility)/1000 + " km";
+  }
+}
+
+async function checkWeather1(lat,lon) {
+  apiurl1="https://api.openweathermap.org/data/2.5/weather?units=metric&";
+  const response = await fetch(apiurl1 + `lon=`+lon +`&lat=`+lat+ `&appid=${apikey}`);
+
+  if (response.status == 404) {
+    document.querySelector(".error").style.display = "block";
+    document.querySelector(".weather").style.display = "none";
+  } else {
+    var data = await response.json();
+    console.log(data);
+
+    document.querySelector(".city").innerHTML = data.name;
+    document.querySelector(".temp").innerHTML =
+      Math.round(data.main.temp) + "°c";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML =
+      Math.round(data.wind.speed) + " km/hr";
+
+    if (data.weather[0].main == "Clouds") {
+      weathericon.src = "images/clouds.png";
+    } else if (data.weather[0].main == "Clear") {
+      weathericon.src = "images/clear.png";
+    } else if (data.weather[0].main == "Drizzle") {
+      weathericon.src = "images/drizzle.png";
+    } else if (data.weather[0].main == "Rain") {
+      weathericon.src = "images/rain.png";
+    } else if (data.weather[0].main == "Mist") {
+      weathericon.src = "images/mist.png";
+    }
+
+    document.querySelector(".weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
+    document.querySelector(".feels").innerHTML=Math.round(data.main.feels_like);
+    document.querySelector(".visible").innerHTML=(data.visibility)/1000 + " km";
+  }
+}
+
+locationButton.addEventListener("click", () => {
+//Geolocation APU is used to get geographical position of a user and is available inside the navigator object
+if (navigator.geolocation) {
+//returns position(latitude and longitude) or error
+navigator.geolocation.getCurrentPosition(showLocation, checkError);
+} else {
+//For old browser i.e IE
+locationDiv.innerText = "The browser does not support geolocation";
+}
+});
+
+//Error Checks
+const checkError = (error) => {
+switch (error.code) {
+case error.PERMISSION_DENIED:
+locationDiv.innerText = "Please allow access to location";
+break;
+case error.POSITION_UNAVAILABLE:
+//usually fired for firefox
+locationDiv.innerText = "Location Information unavailable";
+break;
+case error.TIMEOUT:
+locationDiv.innerText = "The request to get user location timed out";
+}
+};
+
+const showLocation = async (position) => {
+//We user the NOminatim API for getting actual addres from latitude and longitude
+let response = await fetch(
+`https://nominatim.openstreetmap.org/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&format=json`
+);
+//store response object
+let data = await response.json();
+searchbox.value = `${data.address.city}`;
+let longitude=position.coords.longitude;
+let latitude=position.coords.latitude;
+console.log(data);
+console.log(latitude,longitude);
+checkWeather1(latitude,longitude);
+
+};
+
+
+
+// Set default city to Guntur
+//const defaultCity = "Guntur";
+//searchbox.value = defaultCity;
+//checkWeather(searchbox.value);
+
+searchbtn.addEventListener("click", () => {
+  checkWeather(searchbox.value);
+});
+
+
+
+   
+</script>
+</html>
