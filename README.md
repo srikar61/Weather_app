@@ -17,6 +17,8 @@ This is a simple weather application built with HTML, CSS, and JavaScript. It fe
 - **CSS**: Styling and layout.
 - **JavaScript**: Logic to fetch and display weather data.
 - **OpenWeatherMap API**: Fetching real-time weather data.
+## Screenshots
+![Screenshot 2024-07-31 192432](https://github.com/user-attachments/assets/c8812f76-973d-4694-bf84-13154a12c76d)
 
 ## Installation
 
